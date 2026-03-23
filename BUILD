@@ -291,7 +291,10 @@ cc_binary(
         "include/sta",
         "util",
     ],
-    malloc = "@tcmalloc//tcmalloc",
+    malloc = select({
+        "@platforms//os:linux": "@tcmalloc//tcmalloc",
+        "@platforms//os:macos": "@bazel_tools//tools/cpp:malloc",
+    }),
     visibility = ["//visibility:public"],
     deps = [
         ":opensta_lib",
